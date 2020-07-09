@@ -1,3 +1,5 @@
+// Uses one event handler and data to remember associated hint text
+//  as opposed to an individual event with a closure for each item
 $(function() {
     var $search = $('#search');
     var $input = $search.find('input.input_text');
@@ -7,6 +9,7 @@ $(function() {
             .remove()
             .text();
         var $this = $(this);
+         
         $this
             .val(hint)
             .addClass('hint')
