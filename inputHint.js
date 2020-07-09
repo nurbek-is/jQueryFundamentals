@@ -1,19 +1,24 @@
 $(function() {
-// Bind a blur event to the search input that restores the hint text and hint class.
-var $search=$('#search');
-var $input = $search.find('input.input_text') 
-var hint = $search.find('label').remove().text(); //'Enter search term'
+    var $search = $('#search');
+    var $input = $search.find('input.input_text');
+     
+    $input.each(function() {
+        var hint = $search.find('label[for=' + this.name + ']')
+            .remove()
+            .text();
+        var $this = $(this);
+        $this
+            .val(hint)
+            .addClass('hint')
+            .focus(function() {
+                var entry = $this.val();
+                $this.removeClass('hint');
+                if (entry == hint) $this.val('');
+            })
+            .blur(function() {
+                if (!$.trim($this.val())) $this.val(hint);
+                if ($this.val() == hint) $this.addClass('hint');
+            });    
+    });
+});
 
-    $input 
-   .val(hint)
-   .addClass('hint')
-   .focus(function() {
-       var entry = $input.val()
-       $input.removeClass('hint')
-    if(entry == hint) $input.val('');
-   })
-   .blur(function() {
-      if(!$.trim($input.val())) $input.val(hint);
-      if ($input.val() == hint) $input.addClass('hint');
-   })
-})
